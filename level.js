@@ -8,10 +8,6 @@ const levelSubjects = {
             "lessons": [],
             "exercises": [
                 {
-                    "title": "تحليل النصوص",
-                    "downloadNumber": "01"
-                },
-                {
                     "title": "تمارين البلاغة",
                     "downloadNumber": "02"
                 },
