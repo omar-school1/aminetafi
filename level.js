@@ -6,12 +6,7 @@ const levelSubjects = {
             "name": "العربية",
             "icon": "📝",
             "lessons": [],
-            "exercises": [
-                {
-                    "title": "تطبيقات نحوية",
-                    "downloadNumber": "03"
-                }
-            ]
+            "exercises": []
         },
         {
             "name": "الاجتماعيات",
