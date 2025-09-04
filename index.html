@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- إعدادات الصفحة الأساسية -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية النجاح - بوابتك للتميز الدراسي</title>
+
+    <!-- استيراد خط Poppins من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- استيراد ملف التصميم الرئيسي -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- الهيدر: الشريط العلوي مع الشعار والقائمة -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2>مدرستي الرقمية</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="index5.html">المواد</a></li>
+                <li><a href="index4.html">الاختبارات</a></li>
+                <li><a href="#about">من نحن</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- القسم الرئيسي (Hero Section): الشاشة الأولى التي تظهر للمستخدم -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <!-- النص الرئيسي: العنوان والوصف وزر البدء -->
+            <div class="hero-text">
+                <h1>بوابتك للتميز الدراسي</h1>
+                <p>منصة متكاملة لدروس وتمارين واختبارات السلك الثانوي التأهيلي</p>
+                <!-- زر الدعوة للعمل - ينقل المستخدم لصفحة المواد -->
+                <button class="cta-btn" onclick="window.location.href='index5.html'">ابدأ الآن</button>
+            </div>
+            <!-- الرسوم المتحركة: أيقونة متحركة بتأثيرات موشن غرافيك -->
+            <div class="hero-illustration">
+                <div class="education-illustration">
+                    <!-- الأيقونة المتحركة الرئيسية -->
+                    <div class="animated-icon"></div>
+
+                    <!-- الجسيمات المتحركة حول الأيقونة -->
+                    <div class="floating-particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+
+                    <!-- الحلقات المتحركة للتأثير -->
+                    <div class="animated-rings">
+                        <div class="ring ring1"></div>
+                        <div class="ring ring2"></div>
+                        <div class="ring ring3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="why-us">
+        <h2>لماذا أكاديمية النجاح؟</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon book-icon"></div>
+                <h3>دروس منظمة</h3>
+                <p>دروس مرتبة ومنظمة بطريقة تسهل الفهم والاستيعاب</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon pen-icon"></div>
+                <h3>تمارين تفاعلية</h3>
+                <p>تمارين متنوعة لتطبيق ما تعلمته وتعزيز فهمك</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon timer-icon"></div>
+                <h3>اختبارات QCM</h3>
+                <p>اختبارات شاملة لتقييم مستواك الدراسي</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regional and National Exams Section -->
+    <section class="regional-national-exams">
+        <h2>امتحانات الجهوية والوطنية</h2>
+        <p class="section-subtitle">تحضير شامل للامتحانات الرسمية</p>
+
+        <div class="exam-levels">
+            <div class="exam-level-card" onclick="navigateToExams('first-bac')">
+                <div class="level-icon">🎓</div>
+                <h3>الأولى بكالوريا</h3>
+                <p>امتحانات جهوية</p>
+                <div class="subjects-preview">
+                    <span>التربية الإسلامية</span>
+                    <span>الاجتماعيات</span>
+                    <span>اللغة العربية</span>
+                    <span>+2 مواد أخرى</span>
+                </div>
+                <button class="exam-btn">تصفح الامتحانات</button>
+            </div>
+
+            <div class="exam-level-card" onclick="navigateToExams('second-bac')">
+                <div class="level-icon">🏆</div>
+                <h3>الثانية بكالوريا</h3>
+                <p>امتحانات وطنية</p>
+                <div class="subjects-preview">
+                    <span>الفيزياء</span>
+                    <span>علوم الحياة والأرض</span>
+                    <span>الإنجليزية</span>
+                    <span>+3 مواد أخرى</span>
+                </div>
+                <button class="exam-btn">تصفح الامتحانات</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive Tests Section -->
+    <section class="tests-section">
+        <h2>الاختبارات الشاملة</h2>
+        <p class="section-subtitle">اختبر معرفتك الآن</p>
+
+        <div class="test-categories">
+            <div class="test-category">
+                <h3>الأولى بكالوريا</h3>
+                <div class="subjects">
+                    <div class="subject-card">
+                        <div class="subject-icon subject-text-icon">FR</div>
+                        <span>الفرنسية</span>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-icon subject-text-icon">AR</div>
+                        <span>العربية</span>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-icon subject-text-icon">SO</div>
+                        <span>الاجتماعيات</span>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-icon subject-text-icon">IS</div>
+                        <span>التربية الإسلامية</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-category">
+                <h3>الثانية بكالوريا</h3>
+                <div class="subjects">
+                    <div class="subject-card">
+                        <div class="subject-icon biology-icon"></div>
+                        <span>علوم الحياة والأرض</span>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-icon physics-icon"></div>
+                        <span>الفيزياء</span>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-icon math-icon"></div>
+                        <span>الرياضيات</span>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-icon philosophy-icon"></div>
+                        <span>الفلسفة</span>
+                    </div>
+                    <div class="subject-card">
+                        <div class="subject-icon english-icon"></div>
+                        <span>الإنجليزية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Us Section -->
+    <section class="join-us">
+        <div class="join-content">
+            <h2>ابدأ رحلتك التعليمية الآن</h2>
+            <p>كل المواد والدروس متاحة مجاناً - لا حاجة للتسجيل</p>
+            <button class="cta-btn secondary" onclick="window.location.href='index5.html'">تصفح المواد الدراسية</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>مدرستي الرقمية</h3>
+                <p>بوابتك للتميز الدراسي</p>
+            </div>
+            <div class="social-icons">
+                <div class="social-icon facebook" onclick="window.open('https://www.facebook.com/academy.najah', '_blank')">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-icon youtube" onclick="window.open('https://www.youtube.com/@academy-najah', '_blank')">
+                    <i class="fab fa-youtube"></i>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 مدرستي الرقمية. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
