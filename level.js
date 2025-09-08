@@ -193,10 +193,6 @@ const levelSubjects = {
             ],
             "exercises": [
                 {
-                    "title": "حفظ القرآن",
-                    "downloadNumber": "01"
-                },
-                {
                     "title": "شرح الأحاديث",
                     "downloadNumber": "02"
                 }
