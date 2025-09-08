@@ -411,13 +411,6 @@ const examSubjects = {
                 "year": 2026,
                 "fileUrl": "https://replit.com/@storelab225/FFFFFFD",
                 "correctionUrl": "https://replit.com/@storelab225/FFFFFFD",
-                "addedAt": "2025-09-08T15:45:03.971Z"
-            },
-            {
-                "title": "تجربي",
-                "year": 2026,
-                "fileUrl": "https://replit.com/@storelab225/FFFFFFD",
-                "correctionUrl": "https://replit.com/@storelab225/FFFFFFD",
                 "addedAt": "2025-09-08T15:48:05.157Z"
             }
         ]
