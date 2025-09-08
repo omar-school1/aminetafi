@@ -17,10 +17,6 @@ const levelSubjects = {
                     "downloadNumber": "01"
                 },
                 {
-                    "title": "الجغرافيا الطبيعية",
-                    "downloadNumber": "02"
-                },
-                {
                     "title": "التربية المدنية",
                     "downloadNumber": "03"
                 }
@@ -829,6 +825,8 @@ const levelTitles = {
     "first-bac": "دروس الأولى بكالوريا",
     "second-bac": "دروس الثانية بكالوريا"
 };
+
+// باقي الكود الأصلي للملف إذا كان موجوداً
 
 // باقي الكود الأصلي للملف إذا كان موجوداً
 
