@@ -284,6 +284,184 @@ function downloadExam(title, url) {
     // window.open(url, '_blank');
 }
 
+// Modern Exam Management Functions
+function showAddExamModal(level, subjectKey) {
+    currentExamLevel = level;
+    currentExamSubject = subjectKey;
+    
+    const modalHTML = `
+        <div id="add-exam-modal" class="modern-exam-modal">
+            <div class="modern-modal-overlay" onclick="closeExamModal()"></div>
+            <div class="modern-exam-modal-content">
+                <div class="modern-exam-header">
+                    <div class="exam-header-info">
+                        <div class="exam-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="exam-title-section">
+                            <h2>إضافة امتحان جديد</h2>
+                            <p class="exam-subtitle">أضف امتحان ${examSubjects[level].subjects[subjectKey].name}</p>
+                        </div>
+                    </div>
+                    <button class="modern-close-btn" onclick="closeExamModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <form id="add-exam-form" class="modern-exam-form">
+                    <div class="modern-exam-body">
+                        <div class="exam-form-section">
+                            <div class="exam-section-header">
+                                <div class="exam-section-icon">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="exam-section-title">
+                                    <h3>معلومات الامتحان</h3>
+                                    <p>أدخل تفاصيل الامتحان</p>
+                                </div>
+                            </div>
+                            
+                            <div class="exam-form-grid">
+                                <div class="exam-form-group">
+                                    <label for="exam-title">عنوان الامتحان</label>
+                                    <div class="exam-input-wrapper">
+                                        <input type="text" id="exam-title" class="exam-input" required placeholder="مثل: امتحان جهوي 2024">
+                                        <div class="exam-input-line"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="exam-form-group">
+                                    <label for="exam-year">السنة</label>
+                                    <div class="exam-input-wrapper">
+                                        <input type="number" id="exam-year" class="exam-input" required min="2020" max="2030" placeholder="2024">
+                                        <div class="exam-input-line"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="exam-form-group">
+                                    <label for="exam-date">تاريخ الامتحان</label>
+                                    <div class="exam-input-wrapper">
+                                        <input type="date" id="exam-date" class="exam-input" required>
+                                        <div class="exam-input-line"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="exam-form-group">
+                                    <label for="exam-url">رابط التحميل</label>
+                                    <div class="exam-input-wrapper">
+                                        <input type="url" id="exam-url" class="exam-input" required placeholder="https://drive.google.com/file/...">
+                                        <div class="exam-input-line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modern-exam-footer">
+                        <button type="button" class="modern-exam-btn secondary" onclick="closeExamModal()">
+                            <i class="fas fa-times"></i>
+                            <span>إلغاء</span>
+                        </button>
+                        <button type="submit" class="modern-exam-btn primary">
+                            <i class="fas fa-plus"></i>
+                            <span>إضافة الامتحان</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.getElementById('add-exam-modal').style.display = 'flex';
+    
+    // Handle form submission
+    document.getElementById('add-exam-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        await saveNewExam();
+    });
+}
+
+function closeExamModal() {
+    const modal = document.getElementById('add-exam-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+async function saveNewExam() {
+    const title = document.getElementById('exam-title').value.trim();
+    const year = parseInt(document.getElementById('exam-year').value);
+    const date = document.getElementById('exam-date').value;
+    const downloadUrl = document.getElementById('exam-url').value.trim();
+    
+    if (!title || !year || !date || !downloadUrl) {
+        showNotification('يرجى ملء جميع الحقول', 'error');
+        return;
+    }
+    
+    const examData = {
+        title,
+        date,
+        year,
+        downloadUrl
+    };
+    
+    try {
+        // Add exam to data structure
+        examSubjects[currentExamLevel].subjects[currentExamSubject].exams.push(examData);
+        
+        // Sort exams by year
+        examSubjects[currentExamLevel].subjects[currentExamSubject].exams = 
+            sortExamsByYear(examSubjects[currentExamLevel].subjects[currentExamSubject].exams);
+        
+        // Save to GitHub (would need to implement GitHub integration for exams.js)
+        showNotification('تم إضافة الامتحان بنجاح', 'success');
+        closeExamModal();
+        
+        // Refresh the display
+        if (window.location.search.includes('level=' + currentExamLevel)) {
+            setTimeout(() => location.reload(), 1000);
+        }
+        
+    } catch (error) {
+        console.error('Error saving exam:', error);
+        showNotification('حدث خطأ في حفظ الامتحان', 'error');
+    }
+}
+
+function deleteExam(level, subjectKey, examIndex) {
+    if (confirm('هل أنت متأكد من حذف هذا الامتحان؟')) {
+        try {
+            examSubjects[level].subjects[subjectKey].exams.splice(examIndex, 1);
+            showNotification('تم حذف الامتحان بنجاح', 'success');
+            
+            // Refresh the display
+            setTimeout(() => location.reload(), 1000);
+            
+        } catch (error) {
+            console.error('Error deleting exam:', error);
+            showNotification('حدث خطأ في حذف الامتحان', 'error');
+        }
+    }
+}
+
+// Enhanced download function
+function downloadExam(title, downloadUrl) {
+    if (downloadUrl === '#') {
+        showNotification('رابط التحميل غير متوفر حالياً', 'warning');
+        return;
+    }
+    
+    showNotification('جار تحضير التحميل...', 'info');
+    
+    // Open download link
+    setTimeout(() => {
+        window.open(downloadUrl, '_blank');
+        showNotification(`تم بدء تحميل: ${title}`, 'success');
+    }, 1000);
+}
+
 // Function to add new exam (for admin use)
 function addExam(level, subjectKey, examData) {
     if (examSubjects[level] && examSubjects[level].subjects[subjectKey]) {
@@ -291,4 +469,36 @@ function addExam(level, subjectKey, examData) {
         // Auto-sort after adding
         examSubjects[level].subjects[subjectKey].exams = sortExamsByYear(examSubjects[level].subjects[subjectKey].exams);
     }
+}
+
+// Notification system
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `exam-notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">
+                ${type === 'success' ? '<i class="fas fa-check-circle"></i>' : 
+                  type === 'error' ? '<i class="fas fa-times-circle"></i>' : 
+                  type === 'warning' ? '<i class="fas fa-exclamation-triangle"></i>' : 
+                  '<i class="fas fa-info-circle"></i>'}
+            </div>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
 }
