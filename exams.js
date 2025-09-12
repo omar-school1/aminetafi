@@ -1,12 +1,5 @@
-// GitHub configuration for exam data (public access only)
-const GITHUB_CONFIG = {
-    owner: 'omar-school1',
-    repo: 'aminetafi',
-    examFilePath: 'exams.js'
-};
-
-// Dynamic exam data loaded from GitHub
-let dynamicExamSubjects = {};
+// Exams page works with local data only for security
+// GitHub synchronization is handled by the admin dashboard securely
 
 // Regional and National Exams Data with Automatic Year Sorting (fallback data)
 const examSubjects = {
@@ -153,59 +146,11 @@ function navigateToExams(level) {
     window.location.href = `exams.html?level=${level}`;
 }
 
-// GitHub API Functions for Exam Data
-async function fetchExamDataFromGitHub() {
-    try {
-        console.log('🔄 محاولة تحميل بيانات الامتحانات من GitHub...');
-        
-        // Using public GitHub API (no authentication required for public repos)
-        const response = await fetch(`https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.examFilePath}`, {
-            headers: {
-                'Accept': 'application/vnd.github.v3+json'
-            }
-        });
+// Local exam data functions only - GitHub sync handled by admin dashboard
 
-        if (!response.ok) {
-            if (response.status === 404) {
-                console.warn('⚠️ ملف الامتحانات غير موجود - استخدام البيانات المحلية');
-            } else {
-                console.warn(`⚠️ خطأ في تحميل البيانات (${response.status}) - استخدام البيانات المحلية`);
-            }
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const content = atob(data.content);
-        
-        // Parse the exam data from GitHub
-        const examMatch = content.match(/const examSubjects = ({[\s\S]*?});/);
-        if (examMatch) {
-            const examDataString = examMatch[1];
-            try {
-                dynamicExamSubjects = eval('(' + examDataString + ')');
-                console.log('📁 تم تحميل بيانات الامتحانات من GitHub بنجاح');
-                console.log('📊 تم العثور على', Object.keys(dynamicExamSubjects).length, 'مستوى دراسي');
-                return true;
-            } catch (parseError) {
-                console.error('❌ خطأ في تحليل بيانات الامتحانات:', parseError);
-                return false;
-            }
-        } else {
-            console.warn('⚠️ لم يتم العثور على بيانات الامتحانات في الملف');
-            return false;
-        }
-        
-        return false;
-    } catch (error) {
-        console.error('❌ خطأ في تحميل بيانات الامتحانات:', error);
-        console.log('📁 سيتم استخدام البيانات المحلية');
-        return false;
-    }
-}
-
-// Get active exam data (GitHub first, fallback to static)
+// Get active exam data (local data only for security)
 function getActiveExamData() {
-    return Object.keys(dynamicExamSubjects).length > 0 ? dynamicExamSubjects : examSubjects;
+    return examSubjects;
 }
 
 // Refresh exam data and display
@@ -228,15 +173,11 @@ function refreshExamData() {
 }
 
 // Initialize exams page
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 تشغيل صفحة الامتحانات...');
+    console.log('📁 استخدام البيانات المحلية الآمنة');
     
-    // Load exam data from GitHub first
-    const githubDataLoaded = await fetchExamDataFromGitHub();
-    
-    if (!githubDataLoaded) {
-        console.log('📁 استخدام البيانات المحلية الافتراضية');
-    }
+    // Use local exam data only
     
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -522,10 +463,7 @@ async function saveNewExam() {
         activeData[currentExamLevel].subjects[currentExamSubject].exams = 
             sortExamsByYear(activeData[currentExamLevel].subjects[currentExamSubject].exams);
         
-        // If we're using dynamic data, update it
-        if (Object.keys(dynamicExamSubjects).length > 0) {
-            dynamicExamSubjects = activeData;
-        }
+        // Local data updated
         
         showNotification('تم إضافة الامتحان بنجاح', 'success');
         closeExamModal();
@@ -546,10 +484,7 @@ function deleteExam(level, subjectKey, examIndex) {
             const activeData = getActiveExamData();
             activeData[level].subjects[subjectKey].exams.splice(examIndex, 1);
             
-            // If we're using dynamic data, update it
-            if (Object.keys(dynamicExamSubjects).length > 0) {
-                dynamicExamSubjects = activeData;
-            }
+            // Local data updated
             
             showNotification('تم حذف الامتحان بنجاح', 'success');
             
