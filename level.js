@@ -467,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // تحديث عنوان الصفحة
     const levelTitle = document.getElementById('level-title');
     if (title) {
-        levelTitle.textContent = دروس ${title};
+        levelTitle.textContent = `دروس ${title}`;
     } else if (levelTitles[level]) {
         levelTitle.textContent = levelTitles[level];
     }
@@ -594,10 +594,10 @@ function toggleSubjectContent(header) {
 
 function downloadLesson(lessonTitle, subjectName) {
     // محاكاة رابط التحميل
-    const downloadUrl = https://drive.google.com/file/download?lesson=${encodeURIComponent(lessonTitle)}&subject=${encodeURIComponent(subjectName)};
+    const downloadUrl = `https://drive.google.com/file/download?lesson=${encodeURIComponent(lessonTitle)}&subject=${encodeURIComponent(subjectName)}`;
 
     // في التطبيق الحقيقي، ستستخدم روابط حقيقية
-    alert(سيتم تحميل الدرس: ${lessonTitle}\nمن مادة: ${subjectName}\n\nرابط التحميل: ${downloadUrl});
+    alert(`سيتم تحميل الدرس: ${lessonTitle}\nمن مادة: ${subjectName}\n\nرابط التحميل: ${downloadUrl}`);
 
     // فتح رابط التحميل (في التطبيق الحقيقي)
     // window.open(downloadUrl, '_blank');
@@ -605,10 +605,10 @@ function downloadLesson(lessonTitle, subjectName) {
 
 function downloadExercise(exerciseTitle, subjectName) {
     // محاكاة رابط التحميل
-    const downloadUrl = https://drive.google.com/file/download?exercise=${encodeURIComponent(exerciseTitle)}&subject=${encodeURIComponent(subjectName)};
+    const downloadUrl = `https://drive.google.com/file/download?exercise=${encodeURIComponent(exerciseTitle)}&subject=${encodeURIComponent(subjectName)}`;
 
     // في التطبيق الحقيقي، ستستخدم روابط حقيقية
-    alert(سيتم تحميل التمرين: ${exerciseTitle}\nمن مادة: ${subjectName}\n\nرابط التحميل: ${downloadUrl});
+    alert(`سيتم تحميل التمرين: ${exerciseTitle}\nمن مادة: ${subjectName}\n\nرابط التحميل: ${downloadUrl}`);
 
     // فتح رابط التحميل (في التطبيق الحقيقي)
     // window.open(downloadUrl, '_blank');
@@ -796,7 +796,7 @@ function displayQuestion() {
     const counterElement = document.getElementById('question-counter');
 
     // عرض السؤال
-    questionElement.innerHTML = <h3>السؤال ${currentQuestionIndex + 1}</h3><p>${question.question}</p>;
+    questionElement.innerHTML = `<h3>السؤال ${currentQuestionIndex + 1}</h3><p>${question.question}</p>`;
 
     // عرض الخيارات
     optionsElement.innerHTML = question.options.map((option, index) => `
@@ -808,8 +808,8 @@ function displayQuestion() {
 
     // تحديث شريط التقدم
     const progress = ((currentQuestionIndex + 1) / currentQuiz.questions.length) * 100;
-    progressElement.style.width = ${progress}%;
-    counterElement.textContent = ${currentQuestionIndex + 1} من ${currentQuiz.questions.length};
+    progressElement.style.width = `${progress}%`;
+    counterElement.textContent = `${currentQuestionIndex + 1} من ${currentQuiz.questions.length}`;
 
     // تحديث أزرار التنقل
     document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
@@ -835,7 +835,7 @@ function selectOption(optionIndex, animate = true) {
     });
 
     // تحديد الخيار المختار
-    const selectedOption = document.querySelector([data-index="${optionIndex}"]);
+    const selectedOption = document.querySelector(`[data-index="${optionIndex}"]`);
     selectedOption.classList.add('selected');
 
     // حفظ الإجابة
@@ -1019,7 +1019,7 @@ function closeQuizModal() {
 function showNotification(message, type = 'info') {
     // إنشاء إشعار مؤقت
     const notification = document.createElement('div');
-    notification.className = notification ${type};
+    notification.className = `notification ${type}`;
     notification.textContent = message;
     
     document.body.appendChild(notification);
@@ -1066,8 +1066,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const levelName = levelNames[level];
     if (levelName) {
-        document.querySelector('.level-header-content h1').textContent = دروس ${levelName};
-        document.title = دروس ${levelName} - أكاديمية النجاح;
+        document.querySelector('.level-header-content h1').textContent = `دروس ${levelName}`;
+        document.title = `دروس ${levelName} - أكاديمية النجاح`;
     }
 
     // Back button functionality
@@ -1106,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.addEventListener('click', function() {
             const lessonTitle = this.querySelector('.lesson-title').textContent;
             // In a real application, this would navigate to a lesson content page
-            alert(سيتم إضافة محتوى الدرس: ${lessonTitle} قريباً);
+            alert(`سيتم إضافة محتوى الدرس: ${lessonTitle} قريباً`);
         });
     });
     
@@ -1114,7 +1114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.addEventListener('click', function() {
             const exerciseTitle = this.querySelector('.exercise-title').textContent;
             // In a real application, this would navigate to an exercise page
-            alert(سيتم إضافة محتوى التمرين: ${exerciseTitle} قريباً);
+            alert(`سيتم إضافة محتوى التمرين: ${exerciseTitle} قريباً`);
         });
     });
 
@@ -1138,7 +1138,7 @@ document.addEventListener('DOMContentLoaded', function() {
     subjectContainers.forEach((container, index) => {
         container.style.opacity = '0';
         container.style.transform = 'translateY(50px)';
-        container.style.transition = all 0.6s ease ${index * 0.2}s;
+        container.style.transition = `all 0.6s ease ${index * 0.2}s`;
         observer.observe(container);
     });
 });
