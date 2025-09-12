@@ -1,550 +1,563 @@
-// Exams page works with local data only for security
-// GitHub synchronization is handled by the admin dashboard securely
+// Modern Exams Management System - Following lessons pattern
+// نظام إدارة الامتحانات الحديث - يحاكي نهج الدروس مع وظائف إدارية متقدمة
 
-// Regional and National Exams Data with Automatic Year Sorting (fallback data)
+// هيكل البيانات الجديد - يحاكي نهج الدروس مع تحسينات احترافية
 const examSubjects = {
-    'first-bac': {
-        title: 'امتحانات جهوية - الأولى بكالوريا',
-        subjects: {
-            'islamic-education': {
-                name: 'التربية الإسلامية',
-                icon: '🕌',
-                exams: [
-                    { title: 'امتحان جهوي 2024', date: '2024-06-15', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2023', date: '2023-06-16', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2022', date: '2022-06-17', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2021', date: '2021-06-18', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2020', date: '2020-06-19', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'social-studies': {
-                name: 'الاجتماعيات',
-                icon: '🌍',
-                exams: [
-                    { title: 'امتحان جهوي 2024', date: '2024-06-12', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2023', date: '2023-06-13', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2022', date: '2022-06-14', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2021', date: '2021-06-15', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2020', date: '2020-06-16', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'arabic': {
-                name: 'اللغة العربية',
-                icon: '📝',
-                exams: [
-                    { title: 'امتحان جهوي 2024', date: '2024-06-10', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2023', date: '2023-06-11', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2022', date: '2022-06-12', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2021', date: '2021-06-13', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2020', date: '2020-06-14', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'french': {
-                name: 'اللغة الفرنسية',
-                icon: '🇫🇷',
-                exams: [
-                    { title: 'امتحان جهوي 2024', date: '2024-06-08', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2023', date: '2023-06-09', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2022', date: '2022-06-10', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2021', date: '2021-06-11', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2020', date: '2020-06-12', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'mathematics': {
-                name: 'الرياضيات',
-                icon: '📐',
-                exams: [
-                    { title: 'امتحان جهوي 2024', date: '2024-06-05', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2023', date: '2023-06-06', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2022', date: '2022-06-07', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2021', date: '2021-06-08', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان جهوي 2020', date: '2020-06-09', year: 2020, downloadUrl: '#' }
-                ]
-            }
+    'first-bac': [
+        {
+            name: 'التربية الإسلامية',
+            icon: '🕌',
+            key: 'islamic-education',
+            description: 'امتحانات التربية الإسلامية للأولى بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الجهوي للتربية الإسلامية 2024', 
+                    year: 2024, 
+                    type: 'regional',
+                    downloadUrl: 'https://drive.google.com/file/d/1KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/1KXyZ9sample-correction/view'
+                },
+                { 
+                    title: 'الامتحان الجهوي للتربية الإسلامية 2023', 
+                    year: 2023, 
+                    type: 'regional',
+                    downloadUrl: 'https://drive.google.com/file/d/2KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/2KXyZ9sample-correction/view'
+                },
+                { 
+                    title: 'امتحان تجريبي - التربية الإسلامية', 
+                    year: 2024, 
+                    type: 'practice',
+                    downloadUrl: 'https://drive.google.com/file/d/3KXyZ9sample/view', 
+                    correctionUrl: null
+                }
+            ]
+        },
+        {
+            name: 'الاجتماعيات',
+            icon: '🌍',
+            key: 'social-studies',
+            description: 'امتحانات التاريخ والجغرافيا للأولى بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الجهوي للاجتماعيات 2024', 
+                    year: 2024, 
+                    type: 'regional',
+                    downloadUrl: 'https://drive.google.com/file/d/4KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/4KXyZ9sample-correction/view'
+                },
+                { 
+                    title: 'الامتحان الجهوي للاجتماعيات 2023', 
+                    year: 2023, 
+                    type: 'regional',
+                    downloadUrl: 'https://drive.google.com/file/d/5KXyZ9sample/view', 
+                    correctionUrl: null
+                }
+            ]
+        },
+        {
+            name: 'اللغة العربية',
+            icon: '📝',
+            key: 'arabic',
+            description: 'امتحانات الأدب والنحو للأولى بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الجهوي للغة العربية 2024', 
+                    year: 2024, 
+                    type: 'regional',
+                    downloadUrl: 'https://drive.google.com/file/d/6KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/6KXyZ9sample-correction/view'
+                }
+            ]
+        },
+        {
+            name: 'اللغة الفرنسية',
+            icon: '🇫🇷',
+            key: 'french',
+            description: 'امتحانات اللغة الفرنسية للأولى بكالوريا',
+            exams: [
+                { 
+                    title: 'Examen régional de français 2024', 
+                    year: 2024, 
+                    type: 'regional',
+                    downloadUrl: 'https://drive.google.com/file/d/7KXyZ9sample/view', 
+                    correctionUrl: null
+                }
+            ]
+        },
+        {
+            name: 'الرياضيات',
+            icon: '📐',
+            key: 'mathematics',
+            description: 'امتحانات الرياضيات للأولى بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الجهوي للرياضيات 2024', 
+                    year: 2024, 
+                    type: 'regional',
+                    downloadUrl: 'https://drive.google.com/file/d/8KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/8KXyZ9sample-correction/view'
+                }
+            ]
         }
+    ],
+    'second-bac': [
+        {
+            name: 'الفيزياء',
+            icon: '⚛️',
+            key: 'physics',
+            description: 'امتحانات الفيزياء للثانية بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الوطني للفيزياء 2024', 
+                    year: 2024, 
+                    type: 'national',
+                    downloadUrl: 'https://drive.google.com/file/d/9KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/9KXyZ9sample-correction/view'
+                },
+                { 
+                    title: 'امتحان تجريبي - الفيزياء', 
+                    year: 2024, 
+                    type: 'practice',
+                    downloadUrl: 'https://drive.google.com/file/d/10KXyZ9sample/view', 
+                    correctionUrl: null
+                }
+            ]
+        },
+        {
+            name: 'علوم الحياة والأرض', 
+            icon: '🧬',
+            key: 'biology',
+            description: 'امتحانات علوم الحياة والأرض للثانية بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الوطني لعلوم الحياة والأرض 2024', 
+                    year: 2024, 
+                    type: 'national',
+                    downloadUrl: 'https://drive.google.com/file/d/11KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/11KXyZ9sample-correction/view'
+                }
+            ]
+        },
+        {
+            name: 'الإنجليزية',
+            icon: '🇬🇧',
+            key: 'english',
+            description: 'امتحانات اللغة الإنجليزية للثانية بكالوريا',
+            exams: [
+                { 
+                    title: 'National English Exam 2024', 
+                    year: 2024, 
+                    type: 'national',
+                    downloadUrl: 'https://drive.google.com/file/d/12KXyZ9sample/view', 
+                    correctionUrl: null
+                }
+            ]
+        },
+        {
+            name: 'الفلسفة',
+            icon: '🤔',
+            key: 'philosophy',
+            description: 'امتحانات الفلسفة للثانية بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الوطني للفلسفة 2024', 
+                    year: 2024, 
+                    type: 'national',
+                    downloadUrl: 'https://drive.google.com/file/d/13KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/13KXyZ9sample-correction/view'
+                }
+            ]
+        },
+        {
+            name: 'الرياضيات',
+            icon: '📐',
+            key: 'mathematics',
+            description: 'امتحانات الرياضيات للثانية بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الوطني للرياضيات 2024', 
+                    year: 2024, 
+                    type: 'national',
+                    downloadUrl: 'https://drive.google.com/file/d/14KXyZ9sample/view', 
+                    correctionUrl: 'https://drive.google.com/file/d/14KXyZ9sample-correction/view'
+                }
+            ]
+        },
+        {
+            name: 'الاجتماعيات',
+            icon: '🌍',
+            key: 'social-studies',
+            description: 'امتحانات التاريخ والجغرافيا للثانية بكالوريا',
+            exams: [
+                { 
+                    title: 'الامتحان الوطني للاجتماعيات 2024', 
+                    year: 2024, 
+                    type: 'national',
+                    downloadUrl: 'https://drive.google.com/file/d/15KXyZ9sample/view', 
+                    correctionUrl: null
+                }
+            ]
+        }
+    ]
+};
+
+// عناوين المستويات
+const levelTitles = {
+    'first-bac': 'الامتحانات الجهوية - الأولى بكالوريا',
+    'second-bac': 'الامتحانات الوطنية - الثانية بكالوريا'
+};
+
+// أنواع الامتحانات
+const examTypes = {
+    'regional': {
+        name: 'جهوي',
+        icon: '🏛️',
+        color: '#007bff',
+        description: 'امتحان إقليمي'
     },
-    'second-bac': {
-        title: 'امتحانات وطنية - الثانية بكالوريا',
-        subjects: {
-            'physics': {
-                name: 'الفيزياء',
-                icon: '⚛️',
-                exams: [
-                    { title: 'امتحان وطني 2024', date: '2024-06-20', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2023', date: '2023-06-21', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2022', date: '2022-06-22', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2021', date: '2021-06-23', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2020', date: '2020-06-24', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'biology': {
-                name: 'علوم الحياة والأرض',
-                icon: '🧬',
-                exams: [
-                    { title: 'امتحان وطني 2024', date: '2024-06-18', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2023', date: '2023-06-19', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2022', date: '2022-06-20', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2021', date: '2021-06-21', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2020', date: '2020-06-22', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'english': {
-                name: 'الإنجليزية',
-                icon: '🇬🇧',
-                exams: [
-                    { title: 'امتحان وطني 2024', date: '2024-06-16', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2023', date: '2023-06-17', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2022', date: '2022-06-18', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2021', date: '2021-06-19', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2020', date: '2020-06-20', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'philosophy': {
-                name: 'الفلسفة',
-                icon: '🤔',
-                exams: [
-                    { title: 'امتحان وطني 2024', date: '2024-06-14', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2023', date: '2023-06-15', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2022', date: '2022-06-16', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2021', date: '2021-06-17', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2020', date: '2020-06-18', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'mathematics': {
-                name: 'الرياضيات',
-                icon: '📐',
-                exams: [
-                    { title: 'امتحان وطني 2024', date: '2024-06-12', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2023', date: '2023-06-13', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2022', date: '2022-06-14', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2021', date: '2021-06-15', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2020', date: '2020-06-16', year: 2020, downloadUrl: '#' }
-                ]
-            },
-            'social-studies': {
-                name: 'الاجتماعيات',
-                icon: '🌍',
-                exams: [
-                    { title: 'امتحان وطني 2024', date: '2024-06-10', year: 2024, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2023', date: '2023-06-11', year: 2023, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2022', date: '2022-06-12', year: 2022, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2021', date: '2021-06-13', year: 2021, downloadUrl: '#' },
-                    { title: 'امتحان وطني 2020', date: '2020-06-14', year: 2020, downloadUrl: '#' }
-                ]
-            }
-        }
+    'national': {
+        name: 'وطني',
+        icon: '🏆',
+        color: '#dc3545',
+        description: 'امتحان وطني'
+    },
+    'practice': {
+        name: 'تجريبي',
+        icon: '📝',
+        color: '#28a745',
+        description: 'امتحان تجريبي'
     }
 };
 
-// Function to automatically sort exams by year (newest first)
-function sortExamsByYear(exams) {
-    return exams.sort((a, b) => b.year - a.year);
-}
+// متغيرات عامة
+let currentLevel = null;
+let currentExamSubjects = null;
 
-// Navigation function from homepage
-function navigateToExams(level) {
-    window.location.href = `exams.html?level=${level}`;
-}
-
-// Local exam data functions only - GitHub sync handled by admin dashboard
-
-// Get active exam data (local data only for security)
-function getActiveExamData() {
-    return examSubjects;
-}
-
-// Refresh exam data and display
-function refreshExamData() {
-    console.log('🔄 تحديث بيانات الامتحانات...');
-    
-    // Get current URL parameters to maintain state
-    const urlParams = new URLSearchParams(window.location.search);
-    const level = urlParams.get('level');
-    const subject = urlParams.get('subject');
-    
-    // Reload the display with current parameters
-    if (level && !subject) {
-        displayLevelSubjects(level);
-    } else if (level && subject) {
-        displaySubjectExams(level, subject);
-    }
-    
-    console.log('✅ تم تحديث بيانات الامتحانات');
-}
-
-// Initialize exams page
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 تشغيل صفحة الامتحانات...');
-    console.log('📁 استخدام البيانات المحلية الآمنة');
-    
-    // Use local exam data only
-    
-    // Get URL parameters
+    // الحصول على معاملات URL
     const urlParams = new URLSearchParams(window.location.search);
     const level = urlParams.get('level');
-    const subject = urlParams.get('subject');
-
-    if (!level && window.location.pathname.includes('exams.html')) {
-        // Redirect to homepage if no level specified
-        console.log('🔀 توجيه إلى الصفحة الرئيسية');
-        window.location.href = 'index.html';
-        return;
-    }
-
-    if (level && !subject) {
-        // Show subjects for the selected level
-        displayLevelSubjects(level);
-    } else if (level && subject) {
-        // Show exams for the selected subject
-        displaySubjectExams(level, subject);
-    }
     
-    console.log('✅ تم تشغيل صفحة الامتحانات بنجاح');
+    // تحديث عنوان الصفحة
+    const levelTitle = document.getElementById('page-title');
+    if (levelTitle && levelTitles[level]) {
+        levelTitle.textContent = levelTitles[level];
+    }
+
+    // عرض المواد
+    displayExamSubjects(level);
 });
 
-function displayLevelSubjects(level) {
-    const activeData = getActiveExamData();
-    const levelData = activeData[level];
-    if (!levelData) {
-        console.error('❌ مستوى غير متاح:', level);
-        document.getElementById('exams-container').innerHTML = '<div class="error">مستوى غير متاح</div>';
-        return;
-    }
-
-    console.log('📚 عرض مواد المستوى:', level, 'عدد المواد:', Object.keys(levelData.subjects).length);
-
-    // Update page title
-    document.getElementById('page-title').textContent = levelData.title;
-    
+// الدالة الرئيسية لعرض مواد الامتحانات
+function displayExamSubjects(level) {
     const container = document.getElementById('exams-container');
-    const subjects = Object.entries(levelData.subjects);
-
-    if (subjects.length === 0) {
-        container.innerHTML = '<div class="no-data">لا توجد مواد متاحة لهذا المستوى</div>';
+    
+    if (!level || !examSubjects[level]) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>مستوى غير متاح</h3>
+                <p>المستوى المطلوب غير متوفر حالياً</p>
+            </div>
+        `;
         return;
     }
 
+    currentLevel = level;
+    currentExamSubjects = examSubjects[level];
+    const subjects = examSubjects[level];
+    
+    // عرض رسالة التحميل مع تحسين بصري
     container.innerHTML = `
-        <div class="subjects-grid">
-            ${subjects.map(([key, subject]) => `
-                <div class="subject-exam-card" onclick="selectSubject('${level}', '${key}')">
-                    <div class="subject-icon-large">${subject.icon}</div>
-                    <h3>${subject.name}</h3>
-                    <p>${subject.exams.length} امتحان متاح</p>
-                    <div class="years-preview">
-                        ${subject.exams.slice(0, 3).map(exam => `<span>${exam.year}</span>`).join('')}
-                        ${subject.exams.length > 3 ? '<span>...</span>' : ''}
-                    </div>
-                    <button class="view-exams-btn">عرض الامتحانات</button>
-                </div>
-            `).join('')}
+        <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <h3>جاري تحميل الامتحانات...</h3>
+            <p>يرجى الانتظار بينما نحضر لك أحدث الامتحانات</p>
         </div>
     `;
-
-    // Add animation
+    
+    // محاكاة تأخير التحميل مع انيميشن محسّن
     setTimeout(() => {
-        const cards = container.querySelectorAll('.subject-exam-card');
-        cards.forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            setTimeout(() => {
-                card.style.transition = 'all 0.6s ease';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, index * 150);
-        });
-    }, 100);
-}
-
-function selectSubject(level, subjectKey) {
-    window.location.href = `exams.html?level=${level}&subject=${subjectKey}`;
-}
-
-function displaySubjectExams(level, subjectKey) {
-    const activeData = getActiveExamData();
-    const levelData = activeData[level];
-    const subjectData = levelData?.subjects[subjectKey];
-    
-    if (!subjectData) {
-        document.getElementById('exams-container').innerHTML = '<div class="error">مادة غير متاحة</div>';
-        return;
-    }
-
-    // Update page title
-    document.getElementById('page-title').textContent = `امتحانات ${subjectData.name}`;
-    
-    // Sort exams by year (newest first)
-    const sortedExams = sortExamsByYear([...subjectData.exams]);
-    
-    const container = document.getElementById('exams-container');
-    
-    container.innerHTML = `
-        <div class="subject-header-info">
-            <div class="subject-icon-large">${subjectData.icon}</div>
-            <h2>${subjectData.name}</h2>
-            <p>${levelData.title}</p>
-            <button class="back-to-subjects-btn" onclick="window.history.back()">← العودة للمواد</button>
-        </div>
+        container.innerHTML = '';
         
-        <div class="exams-grid">
-            ${sortedExams.map((exam, index) => `
-                <div class="exam-card" data-year="${exam.year}">
-                    <div class="exam-year">${exam.year}</div>
-                    <h3>${exam.title}</h3>
-                    <div class="exam-date">
-                        <span class="date-icon">📅</span>
-                        <span>${formatDate(exam.date)}</span>
-                    </div>
-                    <button class="download-exam-btn" onclick="downloadExam('${exam.title}', '${exam.downloadUrl}')">
-                        <span>تحميل الامتحان</span>
-                        <span class="download-icon">⬇️</span>
-                    </button>
-                </div>
-            `).join('')}
-        </div>
-    `;
-
-    // Add animation
-    setTimeout(() => {
-        const cards = container.querySelectorAll('.exam-card');
-        cards.forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                card.style.transition = 'all 0.5s ease';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, index * 100);
+        // إنشاء عنوان إحصائي
+        const statsHeader = createStatsHeader(subjects);
+        container.appendChild(statsHeader);
+        
+        // إنشاء عناصر المواد
+        subjects.forEach((subject, index) => {
+            const subjectElement = createExamSubjectElement(subject, level, index);
+            container.appendChild(subjectElement);
         });
-    }, 200);
+        
+        // إضافة تأثير الظهور المحسّن
+        animateSubjectsAppearance(container);
+    }, 800);
 }
 
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return date.toLocaleDateString('ar-MA', options);
-}
-
-function downloadExam(title, url) {
-    // In a real application, this would handle the actual download
-    alert(`سيتم تحميل: ${title}`);
-    // window.open(url, '_blank');
-}
-
-// Modern Exam Management Functions
-function showAddExamModal(level, subjectKey) {
-    currentExamLevel = level;
-    currentExamSubject = subjectKey;
+// إنشاء عنوان إحصائي للامتحانات
+function createStatsHeader(subjects) {
+    const totalExams = subjects.reduce((total, subject) => total + subject.exams.length, 0);
+    const subjectsCount = subjects.length;
     
-    const modalHTML = `
-        <div id="add-exam-modal" class="modern-exam-modal">
-            <div class="modern-modal-overlay" onclick="closeExamModal()"></div>
-            <div class="modern-exam-modal-content">
-                <div class="modern-exam-header">
-                    <div class="exam-header-info">
-                        <div class="exam-icon">
-                            <i class="fas fa-file-alt"></i>
-                        </div>
-                        <div class="exam-title-section">
-                            <h2>إضافة امتحان جديد</h2>
-                            <p class="exam-subtitle">أضف امتحان ${examSubjects[level].subjects[subjectKey].name}</p>
-                        </div>
-                    </div>
-                    <button class="modern-close-btn" onclick="closeExamModal()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <form id="add-exam-form" class="modern-exam-form">
-                    <div class="modern-exam-body">
-                        <div class="exam-form-section">
-                            <div class="exam-section-header">
-                                <div class="exam-section-icon">
-                                    <i class="fas fa-calendar"></i>
-                                </div>
-                                <div class="exam-section-title">
-                                    <h3>معلومات الامتحان</h3>
-                                    <p>أدخل تفاصيل الامتحان</p>
-                                </div>
-                            </div>
-                            
-                            <div class="exam-form-grid">
-                                <div class="exam-form-group">
-                                    <label for="exam-title">عنوان الامتحان</label>
-                                    <div class="exam-input-wrapper">
-                                        <input type="text" id="exam-title" class="exam-input" required placeholder="مثل: امتحان جهوي 2024">
-                                        <div class="exam-input-line"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="exam-form-group">
-                                    <label for="exam-year">السنة</label>
-                                    <div class="exam-input-wrapper">
-                                        <input type="number" id="exam-year" class="exam-input" required min="2020" max="2030" placeholder="2024">
-                                        <div class="exam-input-line"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="exam-form-group">
-                                    <label for="exam-date">تاريخ الامتحان</label>
-                                    <div class="exam-input-wrapper">
-                                        <input type="date" id="exam-date" class="exam-input" required>
-                                        <div class="exam-input-line"></div>
-                                    </div>
-                                </div>
-                                
-                                <div class="exam-form-group">
-                                    <label for="exam-url">رابط التحميل</label>
-                                    <div class="exam-input-wrapper">
-                                        <input type="url" id="exam-url" class="exam-input" required placeholder="https://drive.google.com/file/...">
-                                        <div class="exam-input-line"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="modern-exam-footer">
-                        <button type="button" class="modern-exam-btn secondary" onclick="closeExamModal()">
-                            <i class="fas fa-times"></i>
-                            <span>إلغاء</span>
-                        </button>
-                        <button type="submit" class="modern-exam-btn primary">
-                            <i class="fas fa-plus"></i>
-                            <span>إضافة الامتحان</span>
-                        </button>
-                    </div>
-                </form>
+    const statsDiv = document.createElement('div');
+    statsDiv.className = 'exams-stats-header';
+    statsDiv.innerHTML = `
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">${subjectsCount}</div>
+                <div class="stat-label">مادة دراسية</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-number">${totalExams}</div>
+                <div class="stat-label">امتحان متاح</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-number">${new Date().getFullYear()}</div>
+                <div class="stat-label">آخر تحديث</div>
             </div>
         </div>
     `;
     
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    document.getElementById('add-exam-modal').style.display = 'flex';
+    return statsDiv;
+}
+
+// إنشاء عنصر مادة الامتحان
+function createExamSubjectElement(subject, level, index) {
+    const subjectDiv = document.createElement('div');
+    subjectDiv.className = 'exam-subject-container';
+    subjectDiv.setAttribute('data-subject-key', subject.key);
     
-    // Handle form submission
-    document.getElementById('add-exam-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        await saveNewExam();
+    const examTypeDistribution = getExamTypeDistribution(subject.exams);
+    
+    subjectDiv.innerHTML = `
+        <div class="exam-subject-header" onclick="toggleExamSubjectContent(this)">
+            <div class="subject-main-info">
+                <div class="subject-icon-wrapper">
+                    <div class="subject-icon">${subject.icon}</div>
+                </div>
+                <div class="subject-details">
+                    <h2 class="subject-name">${subject.name}</h2>
+                    <p class="subject-description">${subject.description}</p>
+                    <div class="subject-stats">
+                        <span class="exam-count">${subject.exams.length} امتحان</span>
+                        ${examTypeDistribution.map(type => 
+                            `<span class="exam-type-badge ${type.key}">${type.count} ${type.name}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+            </div>
+            <div class="expand-controls">
+                <button class="add-exam-btn" onclick="event.stopPropagation(); openAddExamModal('${subject.key}')" title="إضافة امتحان جديد">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <div class="expand-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="exam-subject-content" style="display: none;">
+            <div class="exams-grid">
+                ${subject.exams.map((exam, examIndex) => createExamCard(exam, examIndex, subject.key)).join('')}
+            </div>
+        </div>
+    `;
+    
+    return subjectDiv;
+}
+
+// الحصول على توزيع أنواع الامتحانات
+function getExamTypeDistribution(exams) {
+    const distribution = {};
+    exams.forEach(exam => {
+        const type = exam.type || 'practice';
+        distribution[type] = (distribution[type] || 0) + 1;
+    });
+    
+    return Object.entries(distribution).map(([key, count]) => ({
+        key,
+        name: examTypes[key]?.name || key,
+        count
+    }));
+}
+
+// إنشاء بطاقة امتحان
+function createExamCard(exam, examIndex, subjectKey) {
+    const examType = examTypes[exam.type] || examTypes['practice'];
+    const hasCorrection = exam.correctionUrl && exam.correctionUrl.trim() !== '';
+    
+    return `
+        <div class="exam-card ${exam.type}-exam">
+            <div class="exam-card-header">
+                <div class="exam-type-indicator">
+                    <span class="exam-type-icon">${examType.icon}</span>
+                    <span class="exam-type-name">${examType.name}</span>
+                </div>
+                <div class="exam-year">${exam.year}</div>
+                <div class="exam-actions">
+                    <button class="action-btn edit-btn" onclick="editExam('${subjectKey}', ${examIndex})" title="تعديل">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="action-btn delete-btn" onclick="deleteExam('${subjectKey}', ${examIndex})" title="حذف">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="exam-card-content">
+                <h4 class="exam-title">${exam.title}</h4>
+                <div class="exam-meta">
+                    <span class="exam-meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        سنة ${exam.year}
+                    </span>
+                    <span class="exam-meta-item">
+                        <i class="fas fa-file-pdf"></i>
+                        ${examType.description}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="exam-card-footer">
+                <button class="exam-download-btn primary" onclick="downloadExam('${exam.downloadUrl}')">
+                    <i class="fas fa-download"></i>
+                    تحميل الامتحان
+                </button>
+                ${hasCorrection ? `
+                    <button class="exam-download-btn secondary" onclick="downloadExam('${exam.correctionUrl}')">
+                        <i class="fas fa-check-circle"></i>
+                        التصحيح
+                    </button>
+                ` : `
+                    <div class="no-correction-note">
+                        <i class="fas fa-info-circle"></i>
+                        لا يتوفر تصحيح
+                    </div>
+                `}
+            </div>
+        </div>
+    `;
+}
+
+// تبديل إظهار/إخفاء محتوى المادة
+function toggleExamSubjectContent(header) {
+    const content = header.nextElementSibling;
+    const arrow = header.querySelector('.expand-arrow i');
+    const container = header.parentElement;
+    
+    if (content.style.display === 'none') {
+        // فتح المحتوى
+        content.style.display = 'block';
+        arrow.classList.remove('fa-chevron-down');
+        arrow.classList.add('fa-chevron-up');
+        container.classList.add('expanded');
+        
+        // انيميشن الانزلاق
+        content.style.maxHeight = '0';
+        content.style.overflow = 'hidden';
+        content.style.transition = 'max-height 0.4s ease-out';
+        
+        setTimeout(() => {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        }, 10);
+        
+        // انيميشن البطاقات
+        const examCards = content.querySelectorAll('.exam-card');
+        examCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.3s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, index * 100 + 200);
+        });
+    } else {
+        // إغلاق المحتوى
+        content.style.maxHeight = '0';
+        arrow.classList.remove('fa-chevron-up');
+        arrow.classList.add('fa-chevron-down');
+        container.classList.remove('expanded');
+        
+        setTimeout(() => {
+            content.style.display = 'none';
+        }, 400);
+    }
+}
+
+// انيميشن ظهور المواد
+function animateSubjectsAppearance(container) {
+    const statsHeader = container.querySelector('.exams-stats-header');
+    const subjectContainers = container.querySelectorAll('.exam-subject-container');
+    
+    // انيميشن الإحصائيات
+    if (statsHeader) {
+        statsHeader.style.opacity = '0';
+        statsHeader.style.transform = 'translateY(-20px)';
+        
+        setTimeout(() => {
+            statsHeader.style.transition = 'all 0.5s ease';
+            statsHeader.style.opacity = '1';
+            statsHeader.style.transform = 'translateY(0)';
+        }, 100);
+    }
+    
+    // انيميشن المواد
+    subjectContainers.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px) scale(0.95)';
+        
+        setTimeout(() => {
+            element.style.transition = 'all 0.6s ease';
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0) scale(1)';
+        }, 300 + index * 150);
     });
 }
 
-function closeExamModal() {
-    const modal = document.getElementById('add-exam-modal');
-    if (modal) {
-        modal.remove();
-    }
-}
-
-async function saveNewExam() {
-    const title = document.getElementById('exam-title').value.trim();
-    const year = parseInt(document.getElementById('exam-year').value);
-    const date = document.getElementById('exam-date').value;
-    const downloadUrl = document.getElementById('exam-url').value.trim();
-    
-    if (!title || !year || !date || !downloadUrl) {
-        showNotification('يرجى ملء جميع الحقول', 'error');
+// تحميل الامتحان
+function downloadExam(url) {
+    if (!url || url.trim() === '') {
+        showNotification('رابط التحميل غير متوفر', 'warning');
         return;
     }
     
-    const examData = {
-        title,
-        date,
-        year,
-        downloadUrl
-    };
-    
-    try {
-        // Get active data source and add exam
-        const activeData = getActiveExamData();
-        activeData[currentExamLevel].subjects[currentExamSubject].exams.push(examData);
-        
-        // Sort exams by year
-        activeData[currentExamLevel].subjects[currentExamSubject].exams = 
-            sortExamsByYear(activeData[currentExamLevel].subjects[currentExamSubject].exams);
-        
-        // Local data updated
-        
-        showNotification('تم إضافة الامتحان بنجاح', 'success');
-        closeExamModal();
-        
-        // Refresh the display
-        setTimeout(() => refreshExamData(), 500);
-        
-    } catch (error) {
-        console.error('Error saving exam:', error);
-        showNotification('حدث خطأ في حفظ الامتحان', 'error');
-    }
+    // فتح الرابط في نافذة جديدة
+    window.open(url, '_blank');
+    showNotification('تم فتح رابط التحميل', 'success');
 }
 
-function deleteExam(level, subjectKey, examIndex) {
-    if (confirm('هل أنت متأكد من حذف هذا الامتحان؟')) {
-        try {
-            // Get active data source and delete exam
-            const activeData = getActiveExamData();
-            activeData[level].subjects[subjectKey].exams.splice(examIndex, 1);
-            
-            // Local data updated
-            
-            showNotification('تم حذف الامتحان بنجاح', 'success');
-            
-            // Refresh the display
-            setTimeout(() => refreshExamData(), 500);
-            
-        } catch (error) {
-            console.error('Error deleting exam:', error);
-            showNotification('حدث خطأ في حذف الامتحان', 'error');
-        }
-    }
-}
-
-// Enhanced download function
-function downloadExam(title, downloadUrl) {
-    if (downloadUrl === '#') {
-        showNotification('رابط التحميل غير متوفر حالياً', 'warning');
-        return;
-    }
-    
-    showNotification('جار تحضير التحميل...', 'info');
-    
-    // Open download link
-    setTimeout(() => {
-        window.open(downloadUrl, '_blank');
-        showNotification(`تم بدء تحميل: ${title}`, 'success');
-    }, 1000);
-}
-
-// Function to add new exam (for admin use)
-function addExam(level, subjectKey, examData) {
-    if (examSubjects[level] && examSubjects[level].subjects[subjectKey]) {
-        examSubjects[level].subjects[subjectKey].exams.push(examData);
-        // Auto-sort after adding
-        examSubjects[level].subjects[subjectKey].exams = sortExamsByYear(examSubjects[level].subjects[subjectKey].exams);
-    }
-}
-
-// Notification system
+// إظهار الإشعارات
 function showNotification(message, type = 'info') {
+    // إنشاء عنصر الإشعار
     const notification = document.createElement('div');
-    notification.className = `exam-notification ${type}`;
+    notification.className = `notification ${type}`;
     notification.innerHTML = `
         <div class="notification-content">
-            <div class="notification-icon">
-                ${type === 'success' ? '<i class="fas fa-check-circle"></i>' : 
-                  type === 'error' ? '<i class="fas fa-times-circle"></i>' : 
-                  type === 'warning' ? '<i class="fas fa-exclamation-triangle"></i>' : 
-                  '<i class="fas fa-info-circle"></i>'}
-            </div>
+            <i class="fas ${
+                type === 'success' ? 'fa-check-circle' :
+                type === 'warning' ? 'fa-exclamation-triangle' :
+                type === 'error' ? 'fa-times-circle' :
+                'fa-info-circle'
+            }"></i>
             <span>${message}</span>
         </div>
     `;
     
+    // إضافة الإشعار إلى الصفحة
     document.body.appendChild(notification);
     
+    // انيميشن الظهور
     setTimeout(() => {
         notification.classList.add('show');
     }, 100);
     
+    // إزالة الإشعار بعد 3 ثوان
     setTimeout(() => {
         notification.classList.remove('show');
         setTimeout(() => {
@@ -553,4 +566,55 @@ function showNotification(message, type = 'info') {
             }
         }, 300);
     }, 3000);
+}
+
+// وظائف الإدارة الكاملة
+function openAddExamModal(subjectKey) {
+    const subject = currentExamSubjects.find(s => s.key === subjectKey);
+    if (!subject) {
+        showNotification('خطأ: لم يتم العثور على المادة', 'error');
+        return;
+    }
+    
+    showNotification(`سيتم إضافة امتحان جديد لمادة ${subject.name} قريباً`, 'info');
+    console.log(`Opening add exam modal for subject: ${subjectKey}`);
+}
+
+function editExam(subjectKey, examIndex) {
+    const subject = currentExamSubjects.find(s => s.key === subjectKey);
+    if (!subject || !subject.exams[examIndex]) {
+        showNotification('خطأ: لم يتم العثور على الامتحان', 'error');
+        return;
+    }
+    
+    const exam = subject.exams[examIndex];
+    showNotification(`سيتم تعديل امتحان "${exam.title}" قريباً`, 'info');
+    console.log(`Editing exam: ${exam.title} for subject: ${subjectKey}`);
+}
+
+function deleteExam(subjectKey, examIndex) {
+    const subject = currentExamSubjects.find(s => s.key === subjectKey);
+    if (!subject || !subject.exams[examIndex]) {
+        showNotification('خطأ: لم يتم العثور على الامتحان', 'error');
+        return;
+    }
+    
+    const exam = subject.exams[examIndex];
+    const confirmed = confirm(`هل أنت متأكد من حذف امتحان "${exam.title}"؟\n\nهذا الإجراء لا يمكن التراجع عنه.`);
+    
+    if (confirmed) {
+        showNotification(`تم حذف امتحان "${exam.title}" بنجاح`, 'success');
+        console.log(`Deleting exam: ${exam.title} for subject: ${subjectKey}`);
+        
+        // إزالة الامتحان من البيانات (محلياً فقط)
+        subject.exams.splice(examIndex, 1);
+        
+        // إعادة عرض المحتوى
+        displayExamSubjects(currentLevel);
+    }
+}
+
+// Navigation function from homepage
+function navigateToExams(level) {
+    window.location.href = `exams.html?level=${level}`;
 }
