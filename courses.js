@@ -61,138 +61,72 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-// Dynamic data fetching from level.js file
-// This will ensure the counts are always up-to-date with the actual content
+// Import level subjects data from level.js
+// We need to include the level subjects data here for counting
 
-let dynamicLevelSubjects = null;
+const levelSubjects = {
+    'common-core': [
+        { name: 'العربية' },
+        { name: 'الاجتماعيات' },
+        { name: 'التربية الإسلامية' },
+        { name: 'علوم الحياة والأرض' },
+        { name: 'الفيزياء' },
+        { name: 'الرياضيات' },
+        { name: 'الفلسفة' },
+        { name: 'الإنجليزية' },
+        { name: 'المعلوميات' }
+    ],
+    'first-bac': [
+        { name: 'العربية' },
+        { name: 'الاجتماعيات' },
+        { name: 'التربية الإسلامية' },
+        { name: 'علوم الحياة والأرض' },
+        { name: 'الفيزياء' },
+        { name: 'الرياضيات' },
+        { name: 'الفلسفة' },
+        { name: 'الإنجليزية' }
+    ],
+    'second-bac': [
+        { name: 'العربية' },
+        { name: 'التربية الإسلامية' },
+        { name: 'علوم الحياة والأرض' },
+        { name: 'الفيزياء' },
+        { name: 'الرياضيات' },
+        { name: 'الفلسفة' },
+        { name: 'الإنجليزية' },
+        { name: 'الفرنسية' }
+    ]
+};
 
-// Function to dynamically load and parse level.js data
-async function loadDynamicLevelData() {
-    try {
-        // Try to load level.js content dynamically
-        const response = await fetch('level.js');
-        const levelJsContent = await response.text();
-        
-        // Extract levelSubjects from the file content using regex
-        const levelSubjectsMatch = levelJsContent.match(/const levelSubjects = ({[\s\S]*?});/);
-        
-        if (levelSubjectsMatch) {
-            // Use eval to parse the JavaScript object (safe in this context since it's our own file)
-            dynamicLevelSubjects = eval('(' + levelSubjectsMatch[1] + ')');
-            console.log('تم تحميل بيانات المواد بنجاح:', dynamicLevelSubjects);
-            return true;
-        } else {
-            throw new Error('لم يتم العثور على بيانات levelSubjects في level.js');
-        }
-    } catch (error) {
-        console.warn('خطأ في تحميل البيانات الديناميكية:', error);
-        console.log('سيتم استخدام البيانات الاحتياطية');
-        
-        // Fallback to static data if dynamic loading fails
-        dynamicLevelSubjects = {
-            'common-core': [
-                { name: 'العربية' }, { name: 'الاجتماعيات' }, { name: 'التربية الإسلامية' }, 
-                { name: 'علوم الحياة والأرض' }, { name: 'الفيزياء' }, { name: 'الرياضيات' }, 
-                { name: 'الفلسفة' }, { name: 'الإنجليزية' }, { name: 'المعلوميات' }
-            ],
-            'first-bac': [
-                { name: 'العربية' }, { name: 'الاجتماعيات' }, { name: 'التربية الإسلامية' }, 
-                { name: 'علوم الحياة والأرض' }, { name: 'الفيزياء' }, { name: 'الرياضيات' }, 
-                { name: 'الفلسفة' }, { name: 'الإنجليزية' }
-            ],
-            'second-bac': [
-                { name: 'العربية' }, { name: 'التربية الإسلامية' }, { name: 'علوم الحياة والأرض' }, 
-                { name: 'الفيزياء' }, { name: 'الرياضيات' }, { name: 'الفلسفة' }, 
-                { name: 'الإنجليزية' }, { name: 'الفرنسية' }
-            ]
-        };
-        return false;
-    }
-}
-
-// Function to update subject counts with detailed information
-async function updateSubjectCounts() {
-    // Ensure data is loaded
-    if (!dynamicLevelSubjects) {
-        await loadDynamicLevelData();
-    }
-
-    // Function to count lessons and exercises for a level
-    function countLevelDetails(levelKey) {
-        const subjects = dynamicLevelSubjects[levelKey] || [];
-        let totalLessons = 0;
-        let totalExercises = 0;
-        
-        subjects.forEach(subject => {
-            if (subject.lessons) totalLessons += subject.lessons.length;
-            if (subject.exercises) totalExercises += subject.exercises.length;
-        });
-        
-        return { 
-            subjects: subjects.length, 
-            lessons: totalLessons, 
-            exercises: totalExercises 
-        };
-    }
-
-    // Update Common Core count with detailed info
-    const commonCoreDetails = countLevelDetails('common-core');
+// Function to update subject counts
+function updateSubjectCounts() {
+    // Update Common Core count
+    const commonCoreCount = levelSubjects['common-core'].length;
     const commonCoreElement = document.getElementById('common-core-count');
     if (commonCoreElement) {
-        commonCoreElement.innerHTML = `
-            <div class="count-details">
-                <span class="main-count">${commonCoreDetails.subjects} مواد دراسية</span>
-                <small class="sub-count">${commonCoreDetails.lessons} درس • ${commonCoreDetails.exercises} تمرين</small>
-            </div>
-        `;
+        commonCoreElement.textContent = `${commonCoreCount} مواد دراسية`;
     }
 
-    // Update First Bac count with detailed info
-    const firstBacDetails = countLevelDetails('first-bac');
+    // Update First Bac count  
+    const firstBacCount = levelSubjects['first-bac'].length;
     const firstBacElement = document.getElementById('first-bac-count');
     if (firstBacElement) {
-        firstBacElement.innerHTML = `
-            <div class="count-details">
-                <span class="main-count">${firstBacDetails.subjects} مواد أساسية</span>
-                <small class="sub-count">${firstBacDetails.lessons} درس • ${firstBacDetails.exercises} تمرين</small>
-            </div>
-        `;
+        firstBacElement.textContent = `${firstBacCount} مواد أساسية`;
     }
 
-    // Update Second Bac count with detailed info
-    const secondBacDetails = countLevelDetails('second-bac');
+    // Update Second Bac count
+    const secondBacCount = levelSubjects['second-bac'].length;
     const secondBacElement = document.getElementById('second-bac-count');
     if (secondBacElement) {
-        secondBacElement.innerHTML = `
-            <div class="count-details">
-                <span class="main-count">${secondBacDetails.subjects} مواد أساسية</span>
-                <small class="sub-count">${secondBacDetails.lessons} درس • ${secondBacDetails.exercises} تمرين</small>
-            </div>
-        `;
+        secondBacElement.textContent = `${secondBacCount} مواد أساسية`;
     }
-
-    console.log('تم تحديث إحصائيات المواد:', {
-        'الجذع المشترك': commonCoreDetails,
-        'الأولى بكالوريا': firstBacDetails,
-        'الثانية بكالوريا': secondBacDetails
-    });
 }
 
 // Courses page JavaScript functionality
 
-document.addEventListener('DOMContentLoaded', async function() {
-    // Show loading state
-    const countElements = ['common-core-count', 'first-bac-count', 'second-bac-count'];
-    countElements.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = 'جاري تحميل البيانات...';
-        }
-    });
-
-    // Load dynamic data and update counts
-    await loadDynamicLevelData();
-    await updateSubjectCounts();
+document.addEventListener('DOMContentLoaded', function() {
+    // Update subject counts when page loads
+    updateSubjectCounts();
     // Navigation functionality for level cards
     const levelCards = document.querySelectorAll('.level-card');
     
