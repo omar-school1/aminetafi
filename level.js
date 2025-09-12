@@ -11,7 +11,7 @@ const levelSubjects = {
                     "downloadNumber": "01",
                     "quiz": [
                         {
-                            "question": "ما هو التعريف الصحيح للنص الأدبي؟",
+                            "question": "تجريب",
                             "options": [
                                 "مجموعة من الكلمات المترابطة",
                                 "نص يحمل قيمة جمالية وتعبيرية",
