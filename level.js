@@ -394,7 +394,19 @@ const qcmData = {
                         "explanation": "تجريبي"
                     }
                 ],
-                "الشعر العربي": []
+                "الشعر العربي": [
+                    {
+                        "question": "ffffffffffffffgf",
+                        "options": [
+                            "fffffffffffffffgf",
+                            "fffffffffffffffffgf",
+                            "fffffffggggggggggf",
+                            "fffffffffffgf"
+                        ],
+                        "correct": 0,
+                        "explanation": ""
+                    }
+                ]
             }
         },
         "الرياضيات": {
