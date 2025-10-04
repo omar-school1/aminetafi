@@ -289,9 +289,9 @@ function createSubjectElement(subject) {
                                     <span>تحميل</span>
                                     <div class="download-icon">⬇️</div>
                                 </div>
-                                <div class="lesson-qcm" onclick="startQCMTest('${subject.name}', '${lesson.title}', ${index})">
+                                <div class="lesson-qcm" onclick="handleQCMButtonClick('${subject.name}', '${lesson.title}', ${index})">
                                     <span>اختبار QCM</span>
-                                    <div class="qcm-icon">📝</div>
+                                    <div class="quiz-icon">📝</div>
                                 </div>
                             </div>
                         </li>
@@ -421,32 +421,101 @@ function startQCMTest(subjectName, lessonTitle, lessonIndex) {
     const urlParams = new URLSearchParams(window.location.search);
     const level = urlParams.get('level');
     
-    // Check if QCM data exists for this lesson
-    if (!qcmData[level] || !qcmData[level][subjectName] || !qcmData[level][subjectName].lessons[lessonTitle]) {
-        showQCMMessage('عذراً، لا توجد أسئلة متاحة لهذا الدرس حالياً', 'warning');
-        return;
+    // First, try to fetch fresh QCM data for this lesson
+    fetchQCMDataForLesson(level, subjectName, lessonTitle, lessonIndex);
+}
+
+async function fetchQCMDataForLesson(level, subjectName, lessonTitle, lessonIndex) {
+    showQCMMessage('جاري تحميل بيانات الاختبار...', 'info');
+    
+    try {
+        // Try to load QCM data from GitHub or local storage
+        await loadQCMDataFromSource(level, subjectName, lessonTitle);
+        
+        // Check if QCM data exists for this lesson
+        if (!qcmData[level] || !qcmData[level][subjectName] || !qcmData[level][subjectName].lessons[lessonTitle]) {
+            showQCMMessage('عذراً، لا توجد أسئلة متاحة لهذا الدرس حالياً', 'warning');
+            return;
+        }
+        
+        const questions = qcmData[level][subjectName].lessons[lessonTitle];
+        
+        if (questions.length === 0) {
+            showQCMMessage('عذراً، لا توجد أسئلة متاحة لهذا الدرس حالياً', 'warning');
+            return;
+        }
+        
+        // Initialize QCM
+        currentQCM = {
+            subject: subjectName,
+            lesson: lessonTitle,
+            questions: questions,
+            totalQuestions: questions.length
+        };
+        currentQuestionIndex = 0;
+        userAnswers = [];
+        qcmStartTime = new Date();
+        
+        // Hide loading message and show QCM interface  
+        const messageOverlay = document.getElementById('qcm-message-overlay');
+        if (messageOverlay) messageOverlay.style.display = 'none';
+        showQCMInterface();
+        
+    } catch (error) {
+        console.error('Error loading QCM data:', error);
+        showQCMMessage('حدث خطأ في تحميل بيانات الاختبار', 'error');
     }
+}
+
+// Enhanced function to handle QCM button clicks with proper data loading
+function handleQCMButtonClick(subjectName, lessonTitle, lessonIndex) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const level = urlParams.get('level');
     
-    const questions = qcmData[level][subjectName].lessons[lessonTitle];
+    // Show loading message
+    showQCMMessage('جاري تحميل بيانات الاختبار...', 'info');
     
-    if (questions.length === 0) {
-        showQCMMessage('عذراً، لا توجد أسئلة متاحة لهذا الدرس حالياً', 'warning');
-        return;
+    // Fetch and start QCM test
+    fetchQCMDataForLesson(level, subjectName, lessonTitle, lessonIndex);
+}
+
+// Function to load QCM data from various sources
+async function loadQCMDataFromSource(level, subjectName, lessonTitle) {
+    try {
+        // Try loading from localStorage first (fastest)
+        const localStorageKey = `qcm_${level}_${subjectName}_${lessonTitle}`;
+        const localData = localStorage.getItem(localStorageKey);
+        
+        if (localData) {
+            try {
+                const parsedData = JSON.parse(localData);
+                if (parsedData && Array.isArray(parsedData) && parsedData.length > 0) {
+                    // Initialize nested structure if needed
+                    if (!qcmData[level]) qcmData[level] = {};
+                    if (!qcmData[level][subjectName]) qcmData[level][subjectName] = { lessons: {} };
+                    qcmData[level][subjectName].lessons[lessonTitle] = parsedData;
+                    console.log(`Loaded QCM data from localStorage for ${lessonTitle}`);
+                    return;
+                }
+            } catch (e) {
+                console.warn('Error parsing local QCM data:', e);
+                localStorage.removeItem(localStorageKey); // Remove corrupted data
+            }
+        }
+        
+        // Try to fetch from existing qcmData structure 
+        if (qcmData[level] && qcmData[level][subjectName] && qcmData[level][subjectName].lessons[lessonTitle]) {
+            console.log(`Using existing QCM data for ${lessonTitle}`);
+            return;
+        }
+        
+        // If no data available, log for debugging
+        console.warn(`No QCM data found for ${level} > ${subjectName} > ${lessonTitle}`);
+        
+    } catch (error) {
+        console.error('Error in loadQCMDataFromSource:', error);
+        throw error;
     }
-    
-    // Initialize QCM
-    currentQCM = {
-        subject: subjectName,
-        lesson: lessonTitle,
-        questions: questions,
-        totalQuestions: questions.length
-    };
-    currentQuestionIndex = 0;
-    userAnswers = [];
-    qcmStartTime = new Date();
-    
-    // Show QCM interface
-    showQCMInterface();
 }
 
 function showQCMInterface() {
@@ -493,6 +562,9 @@ function loadQCMQuestion() {
     const question = currentQCM.questions[currentQuestionIndex];
     const container = document.getElementById('qcm-question-container');
     
+    // Support dynamic number of options (not fixed to 4)
+    const optionLabels = ['أ', 'ب', 'ج', 'د', 'هـ', 'و', 'ز', 'ح'];
+    
     container.innerHTML = `
         <div class="qcm-question">
             <h3>${question.question}</h3>
@@ -500,6 +572,7 @@ function loadQCMQuestion() {
                 ${question.options.map((option, index) => `
                     <label class="qcm-option" data-index="${index}">
                         <input type="radio" name="qcm-answer" value="${index}">
+                        <div class="option-marker">${optionLabels[index] || (index + 1)}</div>
                         <span class="option-text">${option}</span>
                         <span class="option-indicator"></span>
                     </label>
@@ -707,23 +780,71 @@ function closeQCMTest() {
     qcmStartTime = null;
 }
 
+// QCM Message Functions
 function showQCMMessage(message, type = 'info') {
-    // Create temporary message overlay
-    const messageOverlay = document.createElement('div');
-    messageOverlay.className = 'qcm-message-overlay';
+    // Create message overlay if it doesn't exist
+    let messageOverlay = document.getElementById('qcm-message-overlay');
+    if (!messageOverlay) {
+        messageOverlay = document.createElement('div');
+        messageOverlay.id = 'qcm-message-overlay';
+        messageOverlay.className = 'qcm-message-overlay';
+        messageOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 15000;
+        `;
+        document.body.appendChild(messageOverlay);
+    }
+    
+    const iconClass = type === 'error' ? 'fa-exclamation-triangle' : 
+                     type === 'warning' ? 'fa-exclamation-circle' : 'fa-info-circle';
+    
     messageOverlay.innerHTML = `
-        <div class="qcm-message ${type}">
-            <p>${message}</p>
-            <button onclick="this.parentElement.parentElement.remove()">حسناً</button>
+        <div class="qcm-message qcm-message-${type}" style="
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            margin: 0 20px;
+        ">
+            <div class="message-content" style="
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                font-size: 1.1rem;
+                color: #333;
+            ">
+                <i class="fas ${iconClass}" style="
+                    font-size: 1.5rem;
+                    color: ${type === 'error' ? '#dc3545' : type === 'warning' ? '#ffc107' : '#007bff'};
+                "></i>
+                <span>${message}</span>
+            </div>
         </div>
     `;
+    messageOverlay.style.display = 'flex';
     
-    document.body.appendChild(messageOverlay);
-    
-    // Auto remove after 3 seconds
-    setTimeout(() => {
-        if (messageOverlay.parentElement) {
-            messageOverlay.remove();
-        }
-    }, 3000);
+    // Auto-hide after 3 seconds for non-error messages
+    if (type !== 'error') {
+        setTimeout(() => {
+            hideQCMMessage();
+        }, 3000);
+    }
 }
+
+function hideQCMMessage() {
+    const messageOverlay = document.getElementById('qcm-message-overlay');
+    if (messageOverlay) {
+        messageOverlay.style.display = 'none';
+    }
+}
+
