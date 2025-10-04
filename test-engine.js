@@ -36,16 +36,6 @@ const sampleQuestions = {
                     "ai acheté"
                 ],
                 "correct": 0
-            },
-            {
-                "question": "Quel mot est masculin?",
-                "options": [
-                    "La table",
-                    "Le livre",
-                    "La chaise",
-                    "La fenêtre"
-                ],
-                "correct": 1
             }
         ]
     },
