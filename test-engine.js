@@ -46,16 +46,6 @@ const sampleQuestions = {
                     "La fenêtre"
                 ],
                 "correct": 1
-            },
-            {
-                "question": "Conjuguez \"finir\" à la première personne du pluriel au présent:",
-                "options": [
-                    "nous finissons",
-                    "nous finions",
-                    "nous finirons",
-                    "nous avons fini"
-                ],
-                "correct": 0
             }
         ]
     },
